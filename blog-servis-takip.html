@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elektronik Cihaz Servis Takip Sistemi - Fatih K.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <canvas id="snakeCanvas"></canvas>
+    <header>
+        <nav>
+            <h1>&lt; Fatih K. /&gt;</h1>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Blog içeriklerinde ara...">
+                    <i class="fas fa-times search-clear" id="searchClear"></i>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                <ul>
+                    <li><a href="index.html">Ana Sayfaya Dön</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <article class="blog-post full-article">
+            <h2>Elektronik Cihaz Servis Takip Sistemi: PHP ile Müşteri ve Servis Yönetimi</h2>
+            <div class="post-meta">
+                <span class="date">18 Ocak 2025</span>
+                <span class="author">Yazar: Fatih Keçecioğlu</span>
+            </div>
+            
+            <div class="featured-image">
+                <img src="images/service-tracking.jpg" alt="Elektronik Cihaz Servis Takip Sistemi" class="post-image">
+            </div>
+
+            <p>Bu yazımda, PHP kullanarak geliştirdiğim elektronik cihaz servis takip sistemini sizlerle paylaşmak istiyorum. Bu proje, elektronik cihaz tamiri yapan işletmelerin müşteri ve servis süreçlerini etkin bir şekilde yönetmelerini sağlayan bir web uygulaması.</p>
+
+            <h3>Projenin Amacı</h3>
+            <p>Elektronik cihaz servisleri günlük olarak çok sayıda cihaz ve müşteri kaydı ile uğraşmaktadır. Bu süreçleri manuel olarak yönetmek zor ve hata yapmaya açık olabilir. Bu projede amacım:</p>
+            <ul class="blog-list">
+                <li>Müşteri bilgilerinin düzenli bir şekilde kaydedilmesi</li>
+                <li>Servis süreçlerinin takibi</li>
+                <li>Cihaz durumlarının anlık izlenmesi</li>
+                <li>Raporlama ve analiz imkanı</li>
+            </ul>
+
+            <h3>Teknik Detaylar ve Kod Yapısı</h3>
+            <p>Proje PHP ve JavaScript kullanılarak geliştirildi, MySQL veritabanı ile entegre edildi. İşte projenin teknik detayları:</p>
+
+            <div class="technical-diagram">
+                <div class="diagram-title">MVC Mimari Yapısı</div>
+                <div class="mermaid">
+                flowchart TB
+                    subgraph Client
+                        Browser[Web Tarayıcısı]
+                    end
+                    
+                    subgraph MVC
+                        Controller[Controller<br>İstek Yönetimi]
+                        Model[Model<br>Veri & İş Mantığı]
+                        View[View<br>Kullanıcı Arayüzü]
+                    end
+                    
+                    subgraph Database
+                        MySQL[MySQL<br>Veritabanı]
+                    end
+                    
+                    Browser -->|HTTP İstek| Controller
+                    Controller -->|Veri İşleme| Model
+                    Model <-->|CRUD| MySQL
+                    Model -->|Data| Controller
+                    Controller -->|Response| View
+                    View -->|HTML| Browser
+                </div>
+                <p class="diagram-caption">Şekil 1: Servis Takip Sistemi MVC Mimarisi</p>
+            </div>
+
+            <h4>Backend (PHP) Yapısı</h4>
+            <ul class="blog-list">
+                <li><strong>PDO Veritabanı Bağlantısı:</strong> SQL injection saldırılarına karşı koruma sağlayan PDO (PHP Data Objects) kullanıldı.</li>
+                <li><strong>MVC Mimari:</strong> Kod organizasyonu Model-View-Controller yapısında düzenlendi:
+                    <ul>
+                        <li>Models: Veritabanı işlemleri ve iş mantığı</li>
+                        <li>Views: Kullanıcı arayüzü şablonları</li>
+                        <li>Controllers: İstek yönetimi ve veri işleme</li>
+                    </ul>
+                </li>
+                <li><strong>Session Yönetimi:</strong> Kullanıcı oturumları PHP'nin native session mekanizması ile güvenli şekilde yönetiliyor.</li>
+            </ul>
+
+            <h4>Frontend (JavaScript) Özellikleri</h4>
+            <ul class="blog-list">
+                <li><strong>AJAX İstekleri:</strong> Sayfa yenilemeden veri alışverişi için jQuery AJAX kullanıldı:
+                    <pre><code>$.ajax({
+    url: 'api/service-status.php',
+    method: 'POST',
+    data: { deviceId: id },
+    success: function(response) {
+        updateServiceStatus(response);
+    }
+});</code></pre>
+                    <div class="code-explanation">
+                        <p><strong>Kod Açıklaması:</strong></p>
+                        <ul>
+                            <li><code>url</code>: Servis durumu bilgisini alacağımız API'nin adresi</li>
+                            <li><code>method</code>: POST metodu ile veri gönderimi yapılıyor</li>
+                            <li><code>data</code>: Sorgulanacak cihazın ID'si sunucuya gönderiliyor</li>
+                            <li><code>success</code>: Sunucudan başarılı yanıt gelirse çalışacak fonksiyon</li>
+                        </ul>
+                    </div>
+                </li>
+                <li><strong>Real-time Güncelleme:</strong> Servis durumu değişikliklerini anlık göstermek için WebSocket teknolojisi kullanıldı.</li>
+                <li><strong>Form Validasyonu:</strong> Client-side doğrulama için özel JavaScript fonksiyonları geliştirildi.</li>
+            </ul>
+
+            <h4>Veritabanı Yapısı ve İlişkiler</h4>
+            <p>MySQL veritabanında kullanılan ana tablolar ve ilişkileri:</p>
+
+            <div class="technical-diagram">
+                <div class="diagram-title">Veritabanı İlişki Şeması</div>
+                <div class="mermaid">
+                erDiagram
+                    CUSTOMERS ||--o{ DEVICES : has
+                    DEVICES ||--o{ SERVICE_RECORDS : has
+                    
+                    CUSTOMERS {
+                        int id PK
+                        string name
+                        string email
+                        string phone
+                        text address
+                        timestamp created_at
+                    }
+                    
+                    DEVICES {
+                        int id PK
+                        int customer_id FK
+                        string device_type
+                        string brand
+                        string model
+                        string serial_number
+                        text problem_desc
+                    }
+                    
+                    SERVICE_RECORDS {
+                        int id PK
+                        int device_id FK
+                        string status
+                        text technician_notes
+                        decimal cost
+                        timestamp completed_at
+                    }
+                </div>
+                <p class="diagram-caption">Şekil 2: Veritabanı İlişki Şeması</p>
+            </div>
+
+            <ul class="blog-list">
+                <li><strong>customers</strong> tablosu:
+                    <pre><code>CREATE TABLE customers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(15),
+    address TEXT,
+    created_at TIMESTAMP
+);</code></pre>
+                    <div class="code-explanation">
+                        <p><strong>Tablo Yapısı Açıklaması:</strong></p>
+                        <ul>
+                            <li><code>id</code>: Otomatik artan benzersiz müşteri numarası</li>
+                            <li><code>name</code>: Müşteri adı için 100 karakter sınırlı alan</li>
+                            <li><code>email</code>: E-posta adresi için 100 karakter sınırlı alan</li>
+                            <li><code>phone</code>: Telefon numarası için 15 karakter sınırlı alan</li>
+                            <li><code>address</code>: Sınırsız uzunlukta adres metni</li>
+                            <li><code>created_at</code>: Müşteri kaydının oluşturulma tarihi ve saati</li>
+                        </ul>
+                    </div>
+                </li>
+                <li><strong>devices</strong> tablosu:
+                    <pre><code>CREATE TABLE devices (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    device_type VARCHAR(50),
+    brand VARCHAR(50),
+    model VARCHAR(50),
+    serial_number VARCHAR(100),
+    problem_desc TEXT,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);</code></pre>
+                    <div class="code-explanation">
+                        <p><strong>Tablo Yapısı Açıklaması:</strong></p>
+                        <ul>
+                            <li><code>id</code>: Otomatik artan benzersiz cihaz numarası</li>
+                            <li><code>customer_id</code>: Cihazın sahibi olan müşteriyle ilişki için foreign key</li>
+                            <li><code>device_type</code>: Cihaz türü (telefon, tablet, bilgisayar vb.)</li>
+                            <li><code>brand</code>: Cihazın markası</li>
+                            <li><code>model</code>: Cihazın modeli</li>
+                            <li><code>serial_number</code>: Cihazın seri numarası</li>
+                            <li><code>problem_desc</code>: Arıza/sorun açıklaması</li>
+                            <li><code>FOREIGN KEY</code>: customers tablosuyla ilişki kurulumu</li>
+                        </ul>
+                    </div>
+                </li>
+                <li><strong>service_records</strong> tablosu:
+                    <pre><code>CREATE TABLE service_records (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    device_id INT,
+    status VARCHAR(20),
+    technician_notes TEXT,
+    cost DECIMAL(10,2),
+    completed_at TIMESTAMP,
+    FOREIGN KEY (device_id) REFERENCES devices(id)
+);</code></pre>
+                    <div class="code-explanation">
+                        <p><strong>Tablo Yapısı Açıklaması:</strong></p>
+                        <ul>
+                            <li><code>id</code>: Otomatik artan benzersiz servis kaydı numarası</li>
+                            <li><code>device_id</code>: Servis kaydının ait olduğu cihazla ilişki için foreign key</li>
+                            <li><code>status</code>: Servis durumu (beklemede, onarımda, tamamlandı vb.)</li>
+                            <li><code>technician_notes</code>: Teknisyen notları ve açıklamalar</li>
+                            <li><code>cost</code>: Servis ücreti (10 basamak, 2 ondalık hassasiyet)</li>
+                            <li><code>completed_at</code>: Servisin tamamlanma tarihi ve saati</li>
+                            <li><code>FOREIGN KEY</code>: devices tablosuyla ilişki kurulumu</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <h4>Session Yönetimi:</h4>
+            <ul class="blog-list">
+                <li><strong>Oturum Kontrolü:</strong> Kullanıcı girişi yapılmadan sisteme erişim engelleniyor:
+                    <pre><code>// Oturum kontrolü
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    echo '&lt;div class="alert alert-warning"&gt;
+        Oturumsuz giriş tespit edildi. 5 saniye içinde yönlendiriliyorsunuz...
+    &lt;/div&gt;';
+    header("refresh:5;url=login.php");
+    exit;
+}</code></pre>
+                    <div class="code-explanation">
+                        <p><strong>Oturum Kontrolü Açıklaması:</strong></p>
+                        <ul>
+                            <li><code>session_start()</code>: Oturum başlatılır veya mevcut oturum devam ettirilir</li>
+                            <li><code>isset($_SESSION['user_id'])</code>: Kullanıcı ID'si kontrol edilir</li>
+                            <li><code>header("refresh:5")</code>: 5 saniye sonra yönlendirme yapılır</li>
+                            <li><code>exit</code>: Oturumsuz erişimde script sonlandırılır</li>
+                        </ul>
+                    </div>
+                </li>
+                <li><strong>Hoşgeldiniz Mesajı:</strong> Başarılı girişte kullanıcıya özel karşılama:
+                    <pre><code>// Hoşgeldiniz mesajı
+if (isset($_SESSION['user_id'])) {
+    $stmt = $pdo->prepare("SELECT name FROM users WHERE id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch();
+    
+    echo '&lt;div class="welcome-message"&gt;
+        Hoş geldiniz, ' . htmlspecialchars($user['name']) . '
+        &lt;span class="last-login"&gt;
+            Son giriş: ' . date('d.m.Y H:i') . '
+        &lt;/span&gt;
+    &lt;/div&gt;';
+}</code></pre>
+                    <div class="code-explanation">
+                        <p><strong>Hoşgeldiniz Mesajı Açıklaması:</strong></p>
+                        <ul>
+                            <li>Oturum açan kullanıcının adı veritabanından çekilir</li>
+                            <li>XSS saldırılarına karşı kullanıcı adı temizlenir</li>
+                            <li>Son giriş tarihi ve saati gösterilir</li>
+                            <li>Özelleştirilmiş karşılama mesajı sunulur</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <h4>Güvenlik Önlemleri ve Best Practices</h4>
+            <ul class="blog-list">
+                <li><strong>SQL Injection Koruması:</strong>
+                    <pre><code>$stmt = $pdo->prepare("SELECT * FROM customers WHERE id = ?");
+$stmt->execute([$customerId]);</code></pre>
+                    <div class="code-explanation">
+                        <p><strong>Güvenlik Kodu Açıklaması:</strong></p>
+                        <ul>
+                            <li><code>prepare</code>: SQL sorgusunu parametreli şekilde hazırlar</li>
+                            <li><code>?</code>: Değer için güvenli yer tutucu</li>
+                            <li><code>execute</code>: Sorguyu güvenli şekilde çalıştırır</li>
+                            <li><code>[$customerId]</code>: Parametre değeri otomatik olarak temizlenir</li>
+                        </ul>
+                    </div>
+                </li>
+                <li><strong>XSS Koruması:</strong> Tüm kullanıcı girdileri htmlspecialchars() ile temizleniyor:
+                    <pre><code>function sanitizeInput($data) {
+    return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+}</code></pre>
+                    <div class="code-explanation">
+                        <p><strong>Güvenlik Fonksiyonu Açıklaması:</strong></p>
+                        <ul>
+                            <li><code>htmlspecialchars()</code>: HTML özel karakterlerini güvenli karakterlere dönüştürür</li>
+                            <li><code>ENT_QUOTES</code>: Hem tek hem çift tırnakları dönüştürür</li>
+                            <li><code>UTF-8</code>: Karakter kodlaması belirtilir</li>
+                            <li>Bu fonksiyon zararlı script kodlarının çalışmasını engeller</li>
+                        </ul>
+                    </div>
+                </li>
+                <li><strong>CSRF Koruması:</strong> Her form gönderiminde benzersiz token kontrolü yapılıyor.</li>
+                <li><strong>Şifreleme:</strong> Kullanıcı şifreleri password_hash() ile güvenli şekilde hashleniyor.</li>
+            </ul>
+
+            <h4>Responsive Tasarım ve UI/UX</h4>
+            <p>Bootstrap framework'ü ile geliştirilen arayüz şu özelliklere sahip:</p>
+            <ul class="blog-list">
+                <li>Grid sistem ile esnek sayfa düzeni</li>
+                <li>Mobile-first yaklaşım</li>
+                <li>Custom CSS ile özelleştirilmiş temiz tasarım</li>
+                <li>Kullanıcı dostu form ve tablolar</li>
+                <li>Yükleme ve işlem durumu göstergeleri</li>
+            </ul>
+
+            <h4>Performans Optimizasyonları</h4>
+            <ul class="blog-list">
+                <li>Veritabanı indekslemesi</li>
+                <li>JavaScript ve CSS dosyalarının minify edilmesi</li>
+                <li>Resim optimizasyonu</li>
+                <li>Cache mekanizmaları</li>
+                <li>Lazy loading uygulaması</li>
+            </ul>
+
+            <h4>Servis Takip Sistemi Arama Fonksiyonu</h4>
+            <p>Sistemde müşteri ve cihaz aramalarını hızlı ve etkili bir şekilde yapabilmek için gelişmiş bir arama sistemi entegre edildi.</p>
+
+            <div class="technical-diagram">
+                <div class="diagram-title">Arama Sistemi Akış Diyagramı</div>
+                <div class="mermaid">
+                flowchart TB
+                    Start[Kullanıcı Araması] -->|Input Event| Debounce[Debounce<br>300ms]
+                    Debounce -->|Min 3 Karakter| AJAX[AJAX İsteği]
+                    AJAX -->|POST| API[Search API]
+                    API -->|SQL Sorgu| DB[(Veritabanı)]
+                    DB -->|Sonuçlar| API
+                    API -->|JSON| AJAX
+                    AJAX -->|Data| Display[Sonuçları Göster]
+                    Display -->|Tıklama| Navigate[Detay Sayfası]
+                </div>
+                <p class="diagram-caption">Şekil 3: Arama Sistemi Akış Diyagramı</p>
+            </div>
+
+            <h5>Arama Sistemi Özellikleri</h5>
+            <pre><code>// Arama fonksiyonu
+function searchSystem(query) {
+    $.ajax({
+        url: 'api/search.php',
+        method: 'POST',
+        data: {
+            query: query,
+            type: 'all',  // 'customer', 'device', 'all'
+            status: 'active'
+        },
+        success: function(response) {
+            displaySearchResults(response);
+        }
+    });
+}</code></pre>
+            <div class="code-explanation">
+                <p><strong>Arama Sistemi Açıklaması:</strong></p>
+                <ul>
+                    <li><code>query</code>: Kullanıcının girdiği arama terimi (müşteri adı, telefon, cihaz seri no vb.)</li>
+                    <li><code>type</code>: Arama yapılacak kategori (müşteri, cihaz veya tümü)</li>
+                    <li><code>status</code>: Aktif kayıtlarda arama yapılmasını sağlar</li>
+                    <li>AJAX kullanılarak sayfa yenilemeden anlık arama yapılır</li>
+                    <li>Sunucuya POST isteği gönderilerek güvenli veri transferi sağlanır</li>
+                </ul>
+            </div>
+
+            <h5>Backend Arama Sorgusu</h5>
+            <pre><code>// SQL sorgusu
+$sql = "
+    SELECT 
+        c.*, 
+        d.device_type, 
+        d.brand, 
+        d.model, 
+        d.serial_number
+    FROM customers c
+    LEFT JOIN devices d ON c.id = d.customer_id
+    WHERE 
+        c.name LIKE :query 
+        OR c.phone LIKE :query
+        OR c.email LIKE :query
+        OR d.serial_number LIKE :query
+        OR d.brand LIKE :query
+    ORDER BY c.name ASC
+";</code></pre>
+            <div class="code-explanation">
+                <p><strong>SQL Sorgu Açıklaması:</strong></p>
+                <ul>
+                    <li><code>LEFT JOIN</code>: Müşteri bilgileriyle cihaz bilgilerini birleştirir, müşterinin cihazı olmasa bile müşteriyi gösterir</li>
+                    <li><code>LIKE</code>: Kısmi eşleşmeleri de bulabilmek için kullanılır (örn: "fat" yazınca "fatih" sonuçlarda çıkar)</li>
+                    <li><code>:query</code>: SQL injection saldırılarına karşı koruma için parametreli sorgu kullanılır</li>
+                    <li>Birden fazla alanda arama yapılabilir (isim, telefon, email, seri no, marka)</li>
+                    <li><code>ORDER BY</code>: Sonuçları müşteri adına göre alfabetik sıralar</li>
+                </ul>
+            </div>
+
+            <h5>Arama Sonuçları Gösterimi</h5>
+            <pre><code>function displaySearchResults(results) {
+    let html = '';
+    results.forEach(result => {
+        html += `
+        &lt;div class="search-result" 
+             onclick="loadCustomerDetails(${result.id})"&gt;
+            &lt;div class="customer-info"&gt;
+                &lt;h4&gt;${result.name}&lt;/h4&gt;
+                &lt;p&gt;${result.phone}&lt;/p&gt;
+            &lt;/div&gt;`;
+        
+        if (result.device_type) {
+            html += `
+            &lt;div class="device-info"&gt;
+                &lt;span&gt;${result.device_type} - ${result.brand}&lt;/span&gt;
+                &lt;small&gt;${result.serial_number}&lt;/small&gt;
+            &lt;/div&gt;`;
+        }
+        
+        html += '&lt;/div&gt;';
+    });
+    searchResultsContainer.innerHTML = html;
+}</code></pre>
+            <div class="code-explanation">
+                <p><strong>Sonuç Gösterimi Açıklaması:</strong></p>
+                <ul>
+                    <li>Her sonuç için tıklanabilir bir kart oluşturulur</li>
+                    <li>Müşteri bilgileri (isim, telefon) her zaman gösterilir</li>
+                    <li>Cihaz bilgileri varsa ayrı bir bölümde gösterilir</li>
+                    <li>Karta tıklandığında müşteri detay sayfasına yönlendirilir</li>
+                    <li>Template literals kullanılarak dinamik HTML oluşturulur</li>
+                </ul>
+            </div>
+
+            <h5>Performans İyileştirmeleri</h5>
+            <pre><code>// Debounce fonksiyonu
+let searchTimeout;
+searchInput.addEventListener('input', function(e) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        const query = e.target.value.trim();
+        if (query.length >= 3) {
+            searchSystem(query);
+        }
+    }, 300);
+});</code></pre>
+            <div class="code-explanation">
+                <p><strong>Performans İyileştirmeleri Açıklaması:</strong></p>
+                <ul>
+                    <li><code>debounce</code>: Her tuş vuruşunda değil, kullanıcı yazmayı bitirince arama yapar</li>
+                    <li><code>clearTimeout</code>: Önceki zamanlayıcıyı iptal ederek gereksiz aramaları engeller</li>
+                    <li><code>trim()</code>: Baştaki ve sondaki boşlukları temizler</li>
+                    <li><code>length >= 3</code>: En az 3 karakter girilmeden arama yapmaz</li>
+                    <li><code>300ms</code>: Kullanıcı yazmayı bitirdikten 300ms sonra aramayı başlatır</li>
+                </ul>
+            </div>
+
+            <p>Bu teknik detayların yanı sıra, proje sürekli olarak geliştirilmeye ve iyileştirilmeye açıktır. Projenin kaynak kodlarına <a href="https://github.com/fatihkececioglu/servistakip" target="_blank">GitHub</a> üzerinden ulaşabilir, inceleyebilir ve katkıda bulunabilirsiniz.</p>
+
+            <div class="article-footer">
+                <a href="https://github.com/fatihkececioglu/servistakip" target="_blank" class="github-link">
+                    <i class="fab fa-github"></i>
+                    GitHub'da İncele
+                </a>
+                <a href="index.html#yazilar" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Yazılara Dön
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Fatih Keçecioğlu. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

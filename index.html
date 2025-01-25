@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Sitesi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <canvas id="snakeCanvas"></canvas>
+    <header>
+        <nav>
+            <h1>&lt; Fatih K. /&gt;</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Blog içeriklerinde ara...">
+                <i class="fas fa-times search-clear" id="searchClear"></i>
+                <div id="searchResults" class="search-results"></div>
+            </div>
+            <ul>
+                <li><a href="#anasayfa">Anasayfa</a></li>
+                <li><a href="#yazilar">Yazılar</a></li>
+                <li><a href="#hakkimda">Hakkımda</a></li>
+                <li><a href="#iletisim">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="anasayfa">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h2>Hoş Geldiniz!</h2>
+                    <p>Web geliştirme, yazılım projeleri ve teknoloji üzerine yazılar.</p>
+                    <a href="#yazilar" class="cta-button">Yazıları Keşfet</a>
+                </div>
+                <div class="hero-image">
+                    <img src="images/coding-workspace.jpg" alt="Coding Workspace" class="workspace-image">
+                </div>
+            </div>
+        </section>
+
+        <section id="yazilar" class="section">
+            <h2 class="section-title">Yazılar</h2>
+            <div class="blog-post">
+                <article>
+                    <h2>Elektronik Cihaz Servis Takip Sistemi</h2>
+                    <div class="post-meta">
+                        <span class="date">18 Ocak 2025</span>
+                        <span class="author">Yazar: Fatih Keçecioğlu</span>
+                    </div>
+                    <p>PHP ve MySQL kullanarak geliştirdiğim elektronik cihaz servis takip sistemini sizlerle paylaşmak istiyorum. Bu proje, elektronik cihaz tamiri yapan işletmelerin müşteri ve servis süreçlerini etkin bir şekilde yönetmelerini sağlayan bir web uygulaması. Projede müşteri yönetimi, servis takibi, raporlama gibi özellikler bulunuyor.</p>
+                    <a href="blog-servis-takip.html" target="_blank" class="read-more">Devamını Oku</a>
+                </article>
+            </div>
+
+            <div class="blog-post">
+                <article>
+                    <h2>İkinci Blog Yazısı</h2>
+                    <div class="post-meta">
+                        <span class="date">18 Ocak 2025</span>
+                        <span class="author">Yazar: Fatih Keçecioğlu</span>
+                    </div>
+                    <p>Yakında gelecek</p>
+                    <a href="#" class="read-more">Devamını Oku</a>
+                </article>
+            </div>
+        </section>
+
+        <section id="hakkimda" class="section">
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="images/developer-setup.jpg" alt="Developer Setup" class="setup-image">
+                </div>
+                <div class="about-content">
+                    <h2>Hakkımda</h2>
+                    <p>Merhaba! Ben Fatih Keçecioğlu. Web geliştirme konusunda tutkulu bir yazılımcıyım.</p>
+                    <p>PHP, JavaScript, HTML ve CSS kullanarak web uygulamaları geliştiriyorum. Özellikle backend sistemler ve veritabanı yönetimi konularında uzmanlaşmaktayım.</p>
+                    <p>Bu blog'da geliştirdiğim projeleri ve teknik deneyimlerimi paylaşıyorum.</p>
+                </div>
+            </div>
+
+            <div class="feedback-form">
+                <h3>Görüşlerinizi Paylaşın</h3>
+                <form action="send_feedback.php" method="POST">
+                    <div class="form-group">
+                        <label for="name">Adınız:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback">Görüşleriniz:</label>
+                        <textarea id="feedback" name="feedback" rows="4" required style="resize: vertical; min-height: 100px; max-height: 300px;"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Gönder</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="iletisim" class="section">
+            <h2 class="section-title">İletişim</h2>
+            <div class="contact-content">
+                <p>Benimle iletişime geçmek için aşağıdaki kanalları kullanabilirsiniz:</p>
+                <ul class="contact-list">
+                    <li><i class="fas fa-envelope"></i> Email: <a href="mailto:fatih776692@gmail.com">fatih776692@gmail.com</a></li>
+                    <li><i class="fab fa-linkedin"></i> LinkedIn: <a href="https://www.linkedin.com/in/fatih-keçecioğlu-0039842b7/" target="_blank">Fatih Keçecioğlu</a></li>
+                    <li><i class="fab fa-github"></i> GitHub: <a href="https://github.com/fatihkececioglu" target="_blank">@fatihkececioglu</a></li>
+                    <li><i class="fab fa-instagram"></i> Instagram: <a href="https://www.instagram.com/fatihkececiogluu/?hl=tr" target="_blank">@fatihkececiogluu</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Fatih Keçecioğlu. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
